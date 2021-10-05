@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Hello Vue</title>
+        <!--import vue-->
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <!--Prepare a container-->
+        <div id="root">
+            <h1>事件绑定</h1>
+            <!-- <button v-on:click="ShowInfo">show info</button>
+            v-on:可以简写为@ -->
+            <button @click="ShowInfo">show info</button>
+            <h3>{{inter}}</h3> <!--js表达式-->
+            
+        </div>
+        <script type="text/javascript">
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        const x = new Vue({
+            el:'#root', //指定当前Vue实例为哪个容器服务，值通常为css选择器字符串
+            data:{ //存储el指定的容器使用的数据
+                inter:'Interpolation',
+                ins:{
+                    pinyin:"zhiling"
+                }
+            },
+            methods:{
+                ShowInfo(event){
+                    console.log(event)
+                    alert('hello you!')
+                }
+            }
+        })
+        </script>
+    </body>
+</html>

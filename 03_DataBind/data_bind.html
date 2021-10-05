@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Data Bind</title>
+        <!--import vue-->
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <!--Prepare a container-->
+        <div id="root">
+            <!--普通写法-->
+            <!--v-model指令只能用在有value值的表单类元素中-->
+            单向数据绑定：<input type="input" v-bind:value="name">
+            双向数据绑定：<input type="input" v-model:value="name">
+            
+            <!--简略写法-->
+            <!--v-model指令只能用在有value值的表单类元素中-->
+            单向数据绑定：<input type="input" :value="name">
+            双向数据绑定：<input type="input" v-model="name">
+
+        </div>
+
+        <script type="text/javascript">
+        Vue.config.productionTip = false
+        
+        const x = new Vue({
+            el:'#root',
+            data:{
+                name:"111"
+            }
+        })
+        </script>
+                   
+    </body>

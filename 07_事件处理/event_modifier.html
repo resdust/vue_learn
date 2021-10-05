@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Hello Vue</title>
+        <!--import vue-->
+        <script type="text/javascript" src="../js/vue.js"></script>
+        <style>
+            *{
+                margin-top: 20px;
+            }
+            .demo1{
+                height: auto;
+                background-color: mediumturquoise;
+            }
+            .box1{
+                padding: 5px;
+            }
+            .box2{padding: 10px}
+            .list{
+                height: 200px;
+                overflow: auto;
+            }
+            li{
+                height: 60px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--Vue中的事件修饰符：
+            1. prevent 阻止默认事件
+            2. stop 阻止事件冒泡（stopPropogation)
+            3. once 事件只触发一次
+            4. capture 使用事件的捕获模式
+            5. self 只有event.target是当前操作的元素时才触发事件
+            6. passive 事件的默认行为立刻执行，无需等待事件回调执行完毕
+        -->
+        <div id="root">
+            <h1>事件修饰符</h1>
+            <h3>prevent 阻止默认事件, 这里不跳转链接</h3>
+            <a href="http://www.athuigu.com" @click.prevent="showInfo">show info</a>
+            <h3>阻止事件冒泡（stopPropogation)</h3>
+            <div class="demo1" @click="showInfo">
+                <button @click.stop="showInfo">show info</button>
+            </div>
+            <h3>事件只触发一次</h3>
+            <button @click.once="showInfo">show info</button>
+            <div class="demo1">
+                <div class="box1" @click.capture="showMsg(1)">
+                    div1
+                    <div class="box2" @click="showMsg(2)">
+                        div2
+                    </div>
+                </div>
+            </div>
+            <h3>只有event.target是当前操作的元素时才触发事件</h3>
+            <div class="demo1" @click.self="showInfo">
+                <button @click.self="showInfo">show info</button>
+            </div>
+            <h3>事件的默认行为立刻执行，无需等待事件回调执行完毕</h3>
+            <ul @wheel.passive="demo" class="list">
+                <!-- @wheel 在滚轮动时触发, @scroll 在滚动条动时触发
+                因此这里passive只对wheel事件有影响，
+                在移动端用的多-->
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        const x = new Vue({
+            el:'#root', //指定当前Vue实例为哪个容器服务，值通常为css选择器字符串
+            data:{ //存储el指定的容器使用的数据
+            },
+            methods:{
+                showInfo(event){
+                    console.log("target",event.target)
+                    alert('hello you!')
+                },
+                showMsg(msg){
+                    console.log(msg)
+                },
+                demo(){
+                    for (let i = 0; i < 10000; i++) {
+                        console.log('#')
+                    }
+                    console.log("Tired!!!")
+                }
+            }
+        })
+        </script>
+    </body>
+</html>

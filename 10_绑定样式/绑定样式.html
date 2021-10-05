@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Hello Vue</title>
+        <!--import vue-->
+        <script type="text/javascript" src="../js/vue.js"></script>
+        <style>
+            #root{
+                line-height: 40px;
+            }
+            .basic{
+                border: solid 2px blue;
+                width: 40%;
+                height: 40px;
+                padding: 5px;
+                margin: 5px;
+                text-align: center;
+                display: inline-block;
+            }
+            .happy {
+                border : solid 5px orange;
+                background-color: pink;
+            }
+            .sad {
+                background-color: lightskyblue;
+            }
+            .type1 {
+                border-radius: 10px;
+            }
+            .type2 {
+                background-color: mediumaquamarine;
+            }
+            .type3 {
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--Prepare a container-->
+        <div id="root">
+            <!-- 前三种常用 -->
+            <!-- 字符串写法，动态指定一个特定样式 -->
+            <div class="basic" :class="mood">This is a test section</div>
+            <button @click="changeMood">randomly change Mood</button>
+            <hr/>
+            <!-- 数组写法，样式名字和个数都不确定 -->
+            <div class="basic" :class="classArr">This is a test section</div>
+            <hr/>
+            <!-- 对象写法，动态决定某个样式用不用 -->
+            <div class="basic" :class="classObj">This is a test section</div>
+            <hr/>
+
+            <!-- style内联样式 -->
+            <div class="basic" :style="styleObj1">This is a test section</div>
+            <hr/>
+            <!-- style数组形式 -->
+            <div class="basic" :style="styleArr">This is a test section</div>
+            <hr/>
+
+        </div>
+        <script type="text/javascript">
+        Vue.config.productionTip = false 
+
+        const vm = new Vue({
+            el:'#root', 
+            data : {
+                mood: "happy",
+                classArr: ['type1', 'type2', 'type3'],
+                classObj: {
+                    type1: true,
+                    type2: false,
+                    type3: true,
+                },
+                styleObj1 : {
+                    fontSize: '40px', //注意font-size变成了frontSize
+                    height: 'auto',
+                    backgroundColor: 'orange', // background-color也一样
+                },
+                styleObj2: {
+                    color: 'red'
+                },
+                styleArr: [
+                    {
+                        fontSize: '40px', //注意font-size变成了frontSize
+                        height: 'auto',
+                        backgroundColor: 'orange', // background-color也一样
+                    },
+                    {
+                        color: 'red'
+                    },
+                ]
+            },
+            methods: {
+                changeMood(){
+                    const arr = ['happy','sad','basic']
+                    var random = Math.floor(Math.random()*3)
+                    console.log(random)
+                    this.mood = arr[random] 
+                }
+            }
+        })
+        </script>
+    </body>
+</html>

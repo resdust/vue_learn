@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Hello Vue</title>
+        <!--import vue-->
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <!--Prepare a container-->
+        <div id="root">
+            姓：<input type="text" v-model="firstName"> <br/>
+            名：<input type="text" v-model="lastName"> <br/>
+            插值全名（前四位）：<span>{{firstName.slice(0,4)}}-{{lastName.slice(0,4)}}</span> <br/>
+            methods全名：<span>{{fullNameMethod()}}</span> <br/>
+            计算属性全名：<span>{{fullName}}</span> <br/>
+            计算属性简写：<span></span> <br/>
+        </div>
+        <script type="text/javascript">
+        Vue.config.productionTip = false 
+
+        const vm = new Vue({
+            el:'#root', 
+            data:{ //是属性attribute
+                firstName:"张",
+                lastName:"三"
+            },
+            computed:{ // 计算属性, 只能通过已有**属性**计算得到
+                //完整写法
+                /*
+                fullName:{
+                    // 有人读取fullName时，getter被调用
+                    // 调用时机：1.初次读取 2.依赖的数据发生变化 内部有缓存，比methods效率高
+                    // 注意调用时不用显式地写get（），计算属性会直接出现在vm中
+                    get(){ //this指向vm，这是vue额外做的工作
+                        console.log("fullName getter!")
+                        return this.firstName + '-' + this.lastName
+                    },
+                    set(value){ //不是必须，但如果计算属性会被修改必须有set
+                        // fullname被修改时调用
+                        console.log('set', value)
+                        const arr = value.split('-')
+                        this.firstName = arr[0]
+                        this.lastName = arr[1]
+                    }
+                }
+                */
+               //简写, 函数相当于getter，只读取不修改
+               fullName(){
+                    console.log("fullName getter!")
+                    try{
+                        res = this.firstName + '-' + this.lastName
+                    }
+                    catch(e){
+                        res = '-'
+                    }
+                    return res
+               }
+            },
+            methods:{
+                ShowInfo(event){
+                    console.log(event)
+                    alert('hello you!')
+                },
+                fullNameMethod(){ //调用时机：每次请求该函数
+                    return this.firstName + '-' + this.lastName
+                }
+            }
+        })
+        </script>
+    </body>
+</html>

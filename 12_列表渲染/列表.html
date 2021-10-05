@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello Vue</title>
+    <!--import vue-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        p{
+            border: solid 2px blue;
+            width: 200px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+        <h2>Listing</h2>
+        <ul>
+            <p>index: name-age</p>
+            <li v-for="(p, index) in persons" :key="index">
+                {{index}} : {{p.name}}-{{p.age}} <!-- 插值语法的{{}}中变量可能来自data，computed或形参 -->
+            </li>
+        </ul>
+        <h2>Info object</h2>
+        <ul>
+            <p>key : value</p>
+            <li v-for="(value, key) in info" :key="key">
+                {{key}} : {{value}} <!-- 插值语法的{{}}中变量可能来自data，computed或形参 -->
+            </li>
+        </ul>
+
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    Vue.config.productionTip = false
+
+    new Vue({
+        el:'#root',
+        data:{
+            persons:[
+                {id:'001',name:'jame',age:99},
+                {id:'002',name:'harry',age:80},
+                {id:'003',name:'lily',age:99},
+            ],
+            info: {
+                name:'admin',
+                password:'password',
+                age:'3 years old'
+            }
+        }
+    })
+  </script>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Hello Vue</title>
+        <!--import vue-->
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <!--Vue为键盘事件提供别名，位置与修饰符相同
+        1. 常用的按键别名
+            enter
+            delete 包括delete和backspace
+            esc
+            space
+            tab 必须配合keydown使用
+            up
+            down
+            left
+            right
+
+        2. Vue未提供别名的按键可以用按键原始key值绑定（event.keyCode），或者短横线命名的按键名（event.key）
+
+        3. keyCode绑定的方式不推荐，已从web标准中移除
+
+        4. 系统修饰键 ctrl，shift，alt，meta（Win）
+            - 配合keyup使用，按下修饰键的同时再按下其他按键，之后释放其他按键，才能触发事件
+            - 配合keydown使用，正常触发事件
+
+        5. Vue.config.keyCode.{自定义别名} = {keyCode} 可以定制按键别名
+        -->
+
+        <div id="root">
+            <h1>键盘事件</h1>
+            <input type="text" :placeholder="info" @keydown.enter="showInfo">
+            
+        </div>
+        <script type="text/javascript">
+        Vue.config.productionTip = false //设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        const x = new Vue({
+            el:'#root', //指定当前Vue实例为哪个容器服务，值通常为css选择器字符串
+            data:{ //存储el指定的容器使用的数据
+                info:"111"
+            },
+            methods:{
+                showInfo(e){
+                    // console.log(e)
+                    console.log(e.target.value)
+                    // alert('hello you!')
+                }
+            }
+        })
+        </script>
+    </body>
+</html>

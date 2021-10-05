@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>CSS display test page</title>
+        <style>
+            #root{
+                display:flex;
+                flex: 200px;
+                /* flex-direction: column; */
+                flex-wrap: wrap;
+                flex-grow: inherit;
+                flex-shrink: inherit;
+                flex-basis: 0px;
+            }
+            div div{
+                width: 100%;
+                margin: 10px;
+                border: solid 5px lightsalmon;
+                padding: 10px;
+                border-radius: 20px;
+                background-color: lightcyan;
+                box-sizing: border-box;
+            }
+            #root > p {
+                height:50px;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                padding: auto;
+            }
+            p{
+                margin: 5px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root">
+            <p>This is a test div.</p>
+            <div>
+              <p>So, this single declaration gives us everything we need. Incredible, right? We have our multiple column layout with equal-sized columns, and the columns are all the same height. This is because the default values given to flex items (the children of the flex container) are set up to solve common problems such as this.</p>
+            </div>
+            <div>
+              <p>To be clear, let's reiterate what is happening here. The element we've given a display value of flex to is acting like a block-level element in terms of how it interacts with the rest of the page, but its children are laid out as flex items. The next section will explain in more detail what this means. Note also that you can use a display value of inline-flex if you wish to lay out an element's children as flex items, but have that element behave like an inline element.</p>
+            </div>
+            <div>
+                <p>The main axis is the axis running in the direction the flex items are laid out in (for example, as rows across the page, or columns down the page.) The start and end of this axis are called the main start and main end.</p>
+            </div>
+        </div>
+    </body>
+</html>

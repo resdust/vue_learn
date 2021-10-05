@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Hello Vue</title>
+        <!--import vue-->
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <!--Prepare a container-->
+        <div id="root">
+            <h2>Today is so {{description}}!</h2>
+            <button @click="changeWeather">switch</button> <br/> <hr/>
+            <h2>There is a numbers struct</h2>
+            <p>numbers: {</p> 
+            <p>a:{{numbers.a}}</p> 
+            <p>b:{{numbers.b}}</p> 
+            <p> }</p>
+            <button @click="changeNumber">add numbers.b</button>
+        </div>
+        <script type="text/javascript">
+        Vue.config.productionTip = false 
+
+        const vm = new Vue({
+            el:'#root', 
+            data:{ 
+                isHot:true,
+                numbers: {
+                    a:1,
+                    b:2
+                }
+            },
+            computed:{
+                description(){
+                return this.isHot ? 'hot' : 'cool'
+                }
+            },
+            methods: {
+                changeWeather(){
+                    this.isHot = !this.isHot
+                },
+                changeNumber(){
+                    this.numbers.b++
+                }
+            },
+            watch: {
+                //简写
+                isHot(newValue, oldValue){
+                    console.log('isHot changed', oldValue, '->', newValue)
+                },
+                //完整
+                numbers : {
+                    deep: true, // 多级结构中某个属性的变化，默认在watch中不开启，但Vue知道数据内部变化了
+                    handler() {
+                        console.log('numbers changed')
+                    }
+                }
+            }
+        })
+        </script>
+    </body>
+</html>
