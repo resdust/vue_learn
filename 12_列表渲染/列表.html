@@ -15,17 +15,44 @@
   <body>
     <div id="root">
         <h2>Listing</h2>
+        <p>index: name-age</p>
+        <button @click="addLiu">点击向前插入老刘</button>
+        <!-- key直接使用index不好：
+                1 逆序操作效率低。每次v-for中内容更改vue会比较key值相同的Vnodes（虚拟dom元素），
+                Vnodes相同时直接复制之前已有的真实dom，否则新生成真实dom。
+                2 有输入类DOM会出错。key=index时，老刘插入到前面则index=0，如果input框中有数据，vue会把
+                有数据的真实dom复制到老刘后面，让最后一行才是没有数据的input框。 
+        -->
         <ul>
-            <p>index: name-age</p>
-            <li v-for="(p, index) in persons" :key="index">
-                {{index}} : {{p.name}}-{{p.age}} <!-- 插值语法的{{}}中变量可能来自data，computed或形参 -->
+            <li v-for="(p, index) in persons" :key="p.id">
+                {{p.id}} : {{p.name}}-{{p.age}} <input></input>
             </li>
         </ul>
-        <h2>Info object</h2>
+        
+        <h2>列表过滤</h2>
+        <input v-model:value="keyword" placeholder="输入姓名关键字搜索列表"></input>
+        <button @click="sortType=2">年龄升序</button>
+        <button @click="sortType=1">年龄降序</button>
+        <button @click="sortType=0">原顺序</button>
         <ul>
-            <p>key : value</p>
+            <li v-for="(p) in filteredLib" :key="p.id">
+                {{p.name}} - {{p.age}} - {{p.sex}}
+            </li>
+        </ul>
+
+        <h2>Info object Listing</h2>
+        <p>key : value</p>
+        <ul>
             <li v-for="(value, key) in info" :key="key">
                 {{key}} : {{value}} <!-- 插值语法的{{}}中变量可能来自data，computed或形参 -->
+            </li>
+        </ul>
+
+        <h2>String Listing(用得少)</h2>
+        <p>letter : index</p>
+        <ul>
+            <li v-for="(letter, index) in str" :key="index">
+                {{letter}} : {{index}} <!-- 插值语法的{{}}中变量可能来自data，computed或形参 -->
             </li>
         </ul>
 
@@ -43,10 +70,51 @@
                 {id:'002',name:'harry',age:80},
                 {id:'003',name:'lily',age:99},
             ],
+            library:[
+                {id:'001', name:'马冬梅',age:19,sex:'女'},
+                {id:'002', name:'周冬雨',age:24,sex:'女'},
+                {id:'003', name:'周杰伦',age:28,sex:'男'},
+                {id:'004', name:'温兆伦',age:22,sex:'男'},
+            ],
+            sortType:0, //0:原顺序 1：降序 2：升序
+            // filteredLib:[], //监视方法使用
             info: {
                 name:'admin',
                 password:'password',
                 age:'3 years old'
+            },
+            str: 'Hello!',
+            keyword:''
+        },
+        methods:{
+            addLiu(){
+                this.persons.unshift({id:'004',name:'liu',age:22})
+            }
+        },
+        //监视方法得到过滤后的列表
+        /*watch:{
+            keyword:{
+                immediate:true,
+                handler(val){
+                this.filteredLib = this.library.filter((p)=>{
+                    return p.name.indexOf(val) !== -1
+                    })
+                }
+            }
+        },*/
+        //计算属性方法得到过滤后的列表, 优先使用
+        computed:{
+            filteredLib(){
+                let res = this.library.filter((p)=>{
+                    return p.name.indexOf(this.keyword) !== -1
+                })
+                if(this.sortType){
+                    //0:原顺序 1：降序 2：升序
+                    res.sort((p1,p2)=>{
+                        return this.sortType === 1 ? p2.age-p1.age : p1.age - p2.age
+                    })
+                }
+                return res
             }
         }
     })
