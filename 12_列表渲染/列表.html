@@ -34,6 +34,7 @@
         <button @click="sortType=2">年龄升序</button>
         <button @click="sortType=1">年龄降序</button>
         <button @click="sortType=0">原顺序</button>
+        <button @click="updateMa">点击修改马冬梅</button>
         <ul>
             <li v-for="(p) in filteredLib" :key="p.id">
                 {{p.name}} - {{p.age}} - {{p.sex}}
@@ -62,11 +63,11 @@
   <script type="text/javascript">
     Vue.config.productionTip = false
 
-    new Vue({
+    const vm = new Vue({
         el:'#root',
         data:{
             persons:[
-                {id:'001',name:'jame',age:99},
+                {'id':'001',name:'jame',age:99},
                 {id:'002',name:'harry',age:80},
                 {id:'003',name:'lily',age:99},
             ],
@@ -89,6 +90,15 @@
         methods:{
             addLiu(){
                 this.persons.unshift({id:'004',name:'liu',age:22})
+            },
+            updateMa(){
+                // 通过索引值修改数组，Vue无法监测到
+                // this.library[0] = {id:'001', name:'马老师',age:33,sex:'女'}
+
+                // Vue包装了数组的push-pop、splice、shift-unshift、sort、reverse等方法
+                // 在使用这些方法修改数组后Vue重新解析模板、生成虚拟dom
+                // 另一种被Vue发现的修改方式是Vue.set
+                this.library.splice(0,1,{id:'001', name:'马老师',age:33,sex:'女'})
             }
         },
         //监视方法得到过滤后的列表

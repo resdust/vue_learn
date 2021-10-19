@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello Vue</title>
+    <!--import vue-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h1>学生信息</h1>
+      <h2>姓名：{{student.name}}</h2>
+      <h2 v-if="student.gender">性别：{{student.gender}}</h2>
+      <button @click="addGender">点击添加性别属性，默认为男</button>
+    </div>
+    
+    <script type="text/javascript">
+      let data = {
+        name: 'tttt',
+        age: '12'
+      }
+      
+      const obs = new Observer(data)
+      
+      let vm = {}
+      vm._data = data = obs
+      //在控制台修改data里的内容，会调用setter，输出“被改了”，
+      //在Vue中，setter会重新解析模板、生成虚拟dom 
+      
+      function Observer(obj){
+        const keys = Object.keys(obj)
+        
+        keys.forEach((k) => {
+          Object.defineProperty(this,k,{
+            get(){
+              return obj[k]
+            },
+            set(val){
+              console.log('被改了！')
+              obj.k = val
+            }
+          })
+        });
+      }
+
+      //使用Vue.set(target,key,value)这个api来响应式添加数据(有getter和setter)
+      //局限性是不能在vm上直接加新数据，只能为已有对象添加属性
+      // Vue.set(vm.student,'gender','男') 
+      // vm.$set(vm.student,'gender','男')
+      // 因为数据代理，vm._data.student可以被简写为上面
+      const vmm = new Vue({
+        el:"#root",
+        data:{
+          student:{
+            name:"Tomson"
+          }
+        },
+        methods:{
+          addGender(){
+            Vue.set(this.student,"gender","男")
+          }
+        }
+      })
+
+    </script>
+  </body>
+</html>
