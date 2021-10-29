@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello Vue</title>
+    <!--import vue-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <school></school>
+    </div>
+  </body>
+  <script type="text/javascript">
+    Vue.config.productionTip = false
+    Vue.prototype.x = 999
+    
+    // 1-创建school组件
+    const school = Vue.extend({
+      template: `
+      <div>
+          <h2>学校名称：{{schoolName}}</h2>
+          <h2>学校地址：{{address}}</h2>
+          <button @click="showX">点击显示x</button>
+          </div>
+          `,
+      data: function() { 
+        return {
+          schoolName: 'atguigu',
+          address: 'Paris',
+        }
+      },
+      methods:{
+        showX(){
+          console.log(this);
+          console.log('x',this.x);
+        }
+      }
+    })
+    
+    // 创建vm
+    new Vue({
+      el:"#root",
+      data:{
+        hello:"Hello VUE!!!"
+      },
+      components:{
+        school
+      }
+    })
+
+    // VueComponent.prototype.__proto__ === Vue.prototype
+    // 组件实例对象也可以访问到Vue原型上的属性、方法
+    // vc就是小型的vm
+    console.log(school.prototype.__proto__ === Vue.prototype); //VueComponent
+
+  </script>
+</html>

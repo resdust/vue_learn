@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello Vue</title>
+    <!--import vue-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+  </head>
+  <body>
+    <!-- 
+      v-big 令绑定的数值放大10倍
+      v-fbind 令绑定的input元素默认获取焦点
+     -->
+    <div id="root">
+      <h2>当前n值: <span v-text="n"></span></h2>
+      <h2>放大10倍后n值: <span v-big="n"></span></h2>
+      <button @click="n++">点我n+1</button>
+      <hr/>
+      <input type="text" v-fbind:value="n" />
+    </div>
+    
+  </body>
+
+  <script type="text/javascript">
+    Vue.config.productionTip = false
+
+    new Vue({
+      el:"#root",
+      data:{
+        n:90
+      },
+      directives:{
+        big(element,binding){
+          // 被调用时间：1.指令与元素成功绑定时；2.指令所在模板被重新解析时
+          element.innerText = binding.value * 10
+          // 注意此处this是window
+          console.log('big',this)
+        },
+        // fbind(element, binding){
+        //   // 绑定成功后调用，但此时dom元素尚未创建
+        //   // 在big按钮点击后，element已经被创建，可以
+        //   element.value = binding.value
+        // },
+        fbind : {
+          bind(element, binding){
+            // 指令与元素成功绑定时（最开始）
+            console.log('bind')
+            element.value = binding.value
+          },
+          inserted(element, binding){
+            // 指令所在元素被插入页面时
+            console.log('inserted')
+            element.focus()
+          },
+          update(element, binding){
+            // 指令所在的模板被重新解析时
+            console.log('update')
+            element.value = binding.value
+          }
+        }
+      }
+    })
+  </script>
+
+</html>

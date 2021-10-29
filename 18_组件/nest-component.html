@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello Vue</title>
+    <!--import vue-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+  </head>
+  <body>
+    <!-- 
+      组件中不要写el，因为组件会由一个vm管理
+     -->
+     <div id="root">
+      <app></app>
+    </div>
+    
+  </body>
+  <script type="text/javascript">
+    Vue.config.productionTip = false
+    
+    // 1-创建student组件
+    const student = Vue.extend({
+      template: `
+      <div>
+        <h2>学生姓名：{{studentName}}</h2>
+        <h2>学生年龄：{{age}}</h2>
+        </div>
+        `,
+        data() { 
+          // data必须是函数，防止数据复用时有引用关系
+          return {
+            studentName: 'Tom',
+            age: 18
+          }
+        },
+      })
+      
+      // 1-创建school组件
+      const school = Vue.extend({
+        template: `
+        <div>
+          <h2>学校名称：{{schoolName}}</h2>
+          <h2>学校地址：{{address}}</h2>
+          <hr/>
+          <student></student>
+          </div>
+          `,
+      data: function() { 
+        return {
+          schoolName: 'atguigu',
+          address: 'Paris',
+        }
+      },
+      components:{
+        student
+      }
+    })
+    
+    //定义hello组件
+    const hello = Vue.extend({
+      template:`
+        <div>
+        <h2>Hello Vue</h2>
+        </div>
+      `
+    })
+
+    // 定义app组件
+    const app = Vue.extend({
+      template:`
+      <div>
+        <hello></hello>
+        <school></school>
+        </div>
+      `,
+      components:{
+        school,
+        hello
+      }
+    })
+    // 创建vm
+    new Vue({
+      el:"#root",
+      components: {
+        // 2-注册组件（局部注册）
+        app
+      }
+    })
+  </script>
+</html>

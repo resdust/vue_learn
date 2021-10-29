@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello Vue</title>
+    <!--import vue-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+  </head>
+  <body>
+    <!-- 
+      组件中不要写el，因为组件会由一个vm管理
+     -->
+     <div id="root">
+      <hello></hello>
+      <hr/>
+      <school_></school_>
+      <hr/>
+      <student></student>
+    </div>
+    
+    <div id="root2">
+      <hello></hello>
+    </div>
+    
+  </body>
+  <script type="text/javascript">
+    Vue.config.productionTip = false
+
+    
+    // 1-创建school组件
+    const school = Vue.extend({
+      template: `
+      <div>
+          <h2>学校名称：{{schoolName}}</h2>
+          <h2>学校地址：{{address}}</h2>
+          </div>
+          `,
+      data: function() { 
+        return {
+          schoolName: 'atguigu',
+          address: 'Paris',
+        }
+      },
+    })
+    
+    // 1-创建student组件
+    const student = Vue.extend({
+      template: `
+      <div>
+        <h2>学校姓名：{{studentName}}</h2>
+        <h2>学校年龄：{{age}}</h2>
+        </div>
+        `,
+        data() { 
+          // data必须是函数，防止数据复用时有引用关系
+          return {
+            studentName: 'Tom',
+          age: 18
+        }
+      },
+    })
+
+    const hello = Vue.extend({
+      template:`
+      <div>
+        <h1>{{hi}}</h1>
+        </div>
+        `,
+        data(){
+          return {
+            hi: "Hello Vue!!"
+          }
+        }
+      })
+      
+    Vue.component('hello',hello) // 2-注册组件（全局注册）
+    
+    // 创建vm
+    new Vue({
+      el:"#root",
+      data:{
+        hello:"Hello VUE!!!"
+      },
+      components: {
+        // 2-注册组件（注册组件）
+        school_: school,
+        student // 简写形式
+      }
+    })
+
+    new Vue({
+      el:"#root2",
+
+    })
+  </script>
+</html>
