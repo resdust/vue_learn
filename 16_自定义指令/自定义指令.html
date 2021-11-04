@@ -8,6 +8,7 @@
   </head>
   <body>
     <!-- 
+      写两个自定义指令：
       v-big 令绑定的数值放大10倍
       v-fbind 令绑定的input元素默认获取焦点
      -->
@@ -32,6 +33,7 @@
       directives:{
         big(element,binding){
           // 被调用时间：1.指令与元素成功绑定时；2.指令所在模板被重新解析时
+          // 相当于bind和update
           element.innerText = binding.value * 10
           // 注意此处this是window
           console.log('big',this)
@@ -44,7 +46,7 @@
         fbind : {
           bind(element, binding){
             // 指令与元素成功绑定时（最开始）
-            console.log('bind')
+            console.log('fbind is binding')
             element.value = binding.value
           },
           inserted(element, binding){
