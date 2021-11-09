@@ -11,10 +11,12 @@
       写两个自定义指令：
       v-big 令绑定的数值放大10倍
       v-fbind 令绑定的input元素默认获取焦点
+      **注意：指令名称需要用kebab-style，即短横线连接法**
      -->
     <div id="root">
       <h2>当前n值: <span v-text="n"></span></h2>
       <h2>放大10倍后n值: <span v-big="n"></span></h2>
+      <h2>缩小10倍后n值: <span v-small="n"></span></h2>
       <button @click="n++">点我n+1</button>
       <hr/>
       <input type="text" v-fbind:value="n" />
@@ -24,6 +26,15 @@
 
   <script type="text/javascript">
     Vue.config.productionTip = false
+
+    // 全局自定义指令
+    // 指令名，配置对象 || 指令名，回调函数
+    Vue.directive('small', 
+      function(element, binding){
+        element.innerText = binding.value / 10
+      }
+      // 另一种写法是写一个对象，传入bind、inserted等方法
+    )
 
     new Vue({
       el:"#root",
