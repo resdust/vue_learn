@@ -1,4 +1,5 @@
 # test_app
+命令行要切换目录到test_app
 
 ## Project setup
 ```
