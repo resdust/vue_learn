@@ -1,21 +1,29 @@
 <template>
-<div class="container">
-  <student name="Jack" gender="male" :age="18"/>
+<div id="root">
+  <div class="todo-container">
+    <div class="todo-wrap">
+      <MyHeader/>
+      <MyList/>
+      <MyFooter/>
+    </div>
+  </div>
 </div>
-  
 </template>
 
 <script>
-import Student from './components/Student.vue'
+import MyHeader from './components/MyHeader.vue'
+import MyFooter from './components/MyFooter.vue'
+import MyList from './components/MyList.vue'
 
 export default {
   name:"App",
   components:{
-    Student
+    MyHeader,
+    MyFooter,
+    MyList
   },
   data() {
     return {
-      msg:"欢迎学习Vue！"
     }
   },
 }
