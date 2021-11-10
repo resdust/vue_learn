@@ -1,5 +1,7 @@
 # test_app
-命令行要切换目录到test_app
+- 这节开始，命令行要切换目录到test_app之后再执行npm run 命令
+- 每个小点需要先修改目录名为src，执行npm run serve才能看到效果
+- test_app目录中只能有一个src
 
 ## Project setup
 ```
