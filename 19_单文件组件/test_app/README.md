@@ -3,6 +3,11 @@
 - 每个小点需要先修改目录名为src，执行npm run serve才能看到效果
 - test_app目录中只能有一个src
 
+## TodoList
+
+![总结](./todolist conclusion.png)
+
+
 ## Project setup
 ```
 npm install
