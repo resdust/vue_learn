@@ -16,4 +16,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 new Vue({
    render: h => h(App),
+   beforeCreate(){
+      Vue.prototype.$bus = this
+   }
 }).$mount('#app')

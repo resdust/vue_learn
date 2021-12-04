@@ -2,9 +2,9 @@
 <div id="root">
   <div class="todo-container">
     <div class="todo-wrap">
-      <MyHeader :addTodo="addTodo"/>
-      <MyList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo"/>
-      <MyFooter :todos="todos" :checkAllTodos="checkAllTodos" :clearAllDone="clearAllDone"/>
+      <MyHeader @addTodo="addTodo"/>
+      <MyList :todos="todos"/>
+      <MyFooter :todos="todos" @checkAllTodos="checkAllTodos" @clearAllDone="clearAllDone"/>
     </div>
   </div>
 </div>
@@ -25,17 +25,11 @@ export default {
   data() {
     return {
       todos:JSON.parse(localStorage.getItem('todos')) || []
-      // [
-      //   {id:'001',title:'睡大觉',done:false},
-      //   {id:'002',title:'吃火锅',done:true},
-      //   {id:'003',title:'写作业',done:false},
-      // ]
     }
   },
   methods: {
     // 添加一个todo
     addTodo(todoObj) {
-      // console.log('App:',x)
       this.todos.unshift(todoObj) 
     },
     // 修改todo的完成状态
@@ -70,6 +64,13 @@ export default {
         localStorage.setItem('todos',JSON.stringify(value))
       }
     }
+  },
+  mounted(){
+    this.$bus.$on('checkTodo',this.checkTodo)
+    this.$bus.$on('deleteTodo',this.deleteTodo)
+  },
+  beforeDestroy(){
+    this.$bus.$off(['checkTodo','deleteTodo'])
   }
 }
 </script>

@@ -3,9 +3,7 @@
     <MyItem 
       v-for="todo in todos" 
       :key="todo.id" 
-      :todo="todo"
-      :checkTodo="checkTodo"
-      :deleteTodo="deleteTodo"/>
+      :todo="todo"/>
   </ul>
 </template>
 
@@ -23,8 +21,6 @@ export default {
   },
   props: {
     todos: Array,
-    checkTodo: Function,
-    deleteTodo: Function
   }
 }
 </script>

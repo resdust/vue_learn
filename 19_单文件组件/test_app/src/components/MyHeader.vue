@@ -20,13 +20,10 @@ export default {
         done:false
       }
       // 通知App添加todo对象
-      this.addTodo(todoObj)
+      this.$emit('addTodo',todoObj)
       // 清空输入栏
       this.todoTitle = ''
     }
-  },
-  props: {
-    addTodo: Function
   },
   data() {
     return {

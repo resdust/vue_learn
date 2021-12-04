@@ -16,17 +16,17 @@ export default {
   name: 'MyItem',
   props:{
     todo:Object,
-    checkTodo: Function,
-    deleteTodo: Function
   },
   methods:{
     handleCheck(id) {
       // 通知App组件修改todo的done值
-      this.checkTodo(id)
+      // this.checkTodo(id)
+      this.$bus.$emit('checkTodo',id)
     },
     handleDelete(id) {
       if(confirm('确定删除吗？')) {
-        this.deleteTodo(id)
+        // this.deleteTodo(id)
+        this.$bus.$emit('deleteTodo',id)
       }
     }
   }
@@ -67,7 +67,7 @@ export default {
     vertical-align: middle;
     margin-top: 3px;
     background-color: #dc3545;
-    // display: block;
+    display: none;
   }
 
   li:before {
